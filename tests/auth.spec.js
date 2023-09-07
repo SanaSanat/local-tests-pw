@@ -11,6 +11,7 @@ test.describe('Authentication & Authorization', () => {
      await expect(page.locator('.ant-avatar-square')).toBeVisible()
    })
 
+
     test('Sign in with not existing credentials', async ({ page }) => {
         await page.goto('https://coding.pasv.us/user/login')
 
@@ -23,3 +24,4 @@ test.describe('Authentication & Authorization', () => {
         await expect(toast).toHaveText('User login. Fail')
     })
 })
+
