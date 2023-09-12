@@ -1,16 +1,11 @@
-import {test, expect} from '@playwright/test'
-import LoginPage from '../pages/login'
+import {test, expect} from '../common/test'
 
 test.describe('Authentication & Authorization', () => {
-  let loginPage
-
-  test.beforeEach(async ({page}) => {
-    //await page.goto('/user/login')
-    loginPage = new LoginPage(page)
+  test.beforeEach(async ({loginPage}) => {
     await loginPage.open()
   })
 
-  test('Sign in with existing credentials', async ({page}) => {
+  test('Sign in with existing credentials', async ({page, loginPage}) => {
     await loginPage.inputEmail.fill(process.env.EMAIL)
     await loginPage.inputPassword.fill(process.env.PASSWORD)
     await loginPage.buttonSubmit.click()
@@ -18,7 +13,7 @@ test.describe('Authentication & Authorization', () => {
     await expect(page.locator('.ant-avatar-square')).toBeVisible()
   })
 
-  test('Sign in with not existing credentials', async ({page}) => {
+  test('Sign in with not existing credentials', async ({loginPage}) => {
     await loginPage.inputEmail.fill('invalid@gmail.com')
     await loginPage.inputPassword.fill('invalid')
     await loginPage.buttonSubmit.click()
