@@ -2,7 +2,7 @@ import {test, expect} from '../common/test'
 import {logInWithApi} from '../common/log-in-with-api'
 
 test.describe('Common', () => {
-  test.beforeEach(async ({page, request, context, loginPage}) => {
+  test.beforeEach(async ({page, request, context}) => {
    // await loginPage.open()
    // await loginPage.logIn(process.env.EMAIL, process.env.PASSWORD)
     await logInWithApi(page, request, context, process.env.EMAIL, process.env.PASSWORD)
