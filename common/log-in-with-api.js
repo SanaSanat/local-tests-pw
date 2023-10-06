@@ -9,6 +9,9 @@ export const logInWithApi = async (page, request, context, email, password) => {
     }
     )
 
+  const body = await  response.json()
+  process.env['PROFILE_ID'] = body.payload.user._id
+
   const headers = response.headers()
   const cookies = headers['set-cookie'].split('\n')
   const setCookies = []
@@ -32,6 +35,8 @@ export const logInWithApi = async (page, request, context, email, password) => {
     }
     setCookies.push(object)
   }
+
+  process.env.COOKIE = `user_auth=true;\nconnect_sid=${setCookies[1].value}`
 
   await page.goto('/')
   await context.addCookies(setCookies)

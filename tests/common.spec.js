@@ -2,7 +2,7 @@ import {test, expect} from '../common/test'
 import {logInWithApi} from '../common/log-in-with-api'
 
 test.describe('Common', () => {
-  test.beforeEach(async ({page, request, context, loginPage}) => {
+  test.beforeEach(async ({page, request, context}) => {
    // await loginPage.open()
    // await loginPage.logIn(process.env.EMAIL, process.env.PASSWORD)
     await logInWithApi(page, request, context, process.env.EMAIL, process.env.PASSWORD)
@@ -24,5 +24,30 @@ test.describe('Common', () => {
     await loginPage.navbar.diary.click()
     await expect(page).toHaveURL('/diary?page=1')
     await expect(page.getByText('Daily reports')).toBeVisible()
+  })
+
+  test('Email confirmation alert is not visible', async ({page, profilePage}) => {
+      await page.route('**/user/auth', async route => {
+      const response = await route.fetch()
+      const json = await response.json()
+      json.payload.emailConfirmation.confirmed = true
+      await route.fulfill({response, json})
+    })
+    await profilePage.open()
+    await page.waitForLoadState('networkidle')
+
+    await expect(profilePage.alert).not.toBeVisible()
+  })
+
+  test('Email confirmation alert is visible', async ({page, profilePage}) => {
+    await page.route('**/user/auth', async route => {
+      const response = await route.fetch()
+      const json = await response.json()
+      json.payload.emailConfirmation.confirmed = false
+      await route.fulfill({response, json})
+    })
+    await profilePage.open()
+
+    await expect(profilePage.alert).toBeVisible()
   })
 })
