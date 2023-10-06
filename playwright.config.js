@@ -10,7 +10,8 @@ require('dotenv').config()
  * @see https://playwright.dev/docs/test-configuration
  */
 module.exports = defineConfig({
-  testDir: './tests',
+  //testDir: './test-demo',
+  testDir: './fixtures-test',
   workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
