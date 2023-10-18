@@ -2,7 +2,7 @@ import {test, expect} from '@playwright/test'
 
   let context;
   let page;
-  test.beforeAll(async ({browser})=>{
+  test.beforeAll(async ({browser}) => {
     context = await browser.newContext();
 
     await context.tracing.start({
@@ -12,7 +12,7 @@ import {test, expect} from '@playwright/test'
     page = await context.newPage()
   })
   test.afterAll(async ()=>{
-    await context.tracing.stop({path:'test2_trace.zip'})
+    await context.tracing.stop({path:'test-trace.zip'})
   })
 
 test('Demo-trace', async () => {
