@@ -10,9 +10,9 @@ require('dotenv').config()
  * @see https://playwright.dev/docs/test-configuration
  */
 module.exports = defineConfig({
-  testDir: './tests',
+  //testDir: './tests',
   //testDir: './test-demo',
-  //testDir: './fixtures-test',
+  testDir: './fixtures-test',
   workers: 1,
   retries: 1,
   timeout: 30 * 1000,
